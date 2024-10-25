@@ -1,0 +1,28 @@
+<h1 class="text-center my-4">Create a New Company</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <%= form_with(model: @company, class: "card p-4 shadow") do |form| %>
+        <div class="mb-3">
+          <%= form.label :name, class: "form-label" %>
+          <%= form.text_field :name, class: "form-control", placeholder: "Enter company name" %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :address, class: "form-label" %>
+          <%= form.text_field :address, class: "form-control", placeholder: "Enter company address" %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :industry_type, class: "form-label" %>
+          <%= form.text_field :industry_type, class: "form-control", placeholder: "Enter industry type" %>
+        </div>
+
+        <div class="d-grid">
+          <%= form.submit "Create Company", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

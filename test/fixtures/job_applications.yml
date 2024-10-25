@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  job: one
+  resume: MyString
+  cover_letter: MyText
+
+two:
+  user: two
+  job: two
+  resume: MyString
+  cover_letter: MyText

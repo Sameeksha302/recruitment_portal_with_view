@@ -5,12 +5,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  enum role: { admin: 0, recruiter: 1, candidate: 2 }
+  enum role: { Admin: 0, Recruiter: 1, Candidate: 2 }
+
+  belongs_to :company, optional: true  # Only recruiters and admins are linked to a company
+  validates :company_name, presence: true, if: -> { role == 'Recruiter' }
+  # validates :role, presence: true
 
   # Set a default role on creation if none is provided
   after_initialize :set_default_role, if: :new_record?
 
   def set_default_role
-    self.role ||= :candidate
+    self.role ||= :Candidate
   end
 end
+
+
