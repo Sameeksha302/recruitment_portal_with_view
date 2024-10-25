@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   belongs_to :company, optional: true  # Only recruiters and admins are linked to a company
   validates :company_name, presence: true, if: -> { role == 'Recruiter' }
+  validates :name,presence: true
   # validates :role, presence: true
 
   # Set a default role on creation if none is provided

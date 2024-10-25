@@ -7,17 +7,9 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # POST /resource/password
-  def create
-    self.resource = resource_class.send_password_reset(resource_params)
-
-    if successfully_sent?(resource)
-      # Custom code: send password reset using UserMailer instead of Devise's default mailer
-      UserMailer.password_reset(resource, resource.reset_password_token).deliver_now
-      respond_with({}, location: after_sending_password_reset_path_for(resource_name))
-    else
-      respond_with(resource)
-    end
-  end
+  # def create
+  #   super
+  # end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit
@@ -36,7 +28,7 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # The path used after sending reset password instructions
-  # def after_sending_password_reset_path_for(resource_name)
+  # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
 end

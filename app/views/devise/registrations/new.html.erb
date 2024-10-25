@@ -7,11 +7,19 @@
         
         <%= render "devise/shared/error_messages", resource: resource %>
 
+        <!-- Name Field -->
         <div class="mb-3">
-          <%= f.label :email, class: 'form-label' %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+          <%= f.label :name, 'Name', class: 'form-label' %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
         </div>
 
+        <!-- Email Field -->
+        <div class="mb-3">
+          <%= f.label :email, class: 'form-label' %>
+          <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
+        </div>
+
+        <!-- Password Field -->
         <div class="mb-3">
           <%= f.label :password, class: 'form-label' %>
           <% if @minimum_password_length %>
@@ -20,6 +28,7 @@
           <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
         </div>
 
+        <!-- Password Confirmation Field -->
         <div class="mb-3">
           <%= f.label :password_confirmation, class: 'form-label' %>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
@@ -37,6 +46,7 @@
           <%= f.text_field :company_name, class: 'form-control' %>
         </div>
 
+        <!-- Submit Button -->
         <div class="d-grid">
           <%= f.submit "Sign up", class: "btn btn-primary" %>
         </div>
