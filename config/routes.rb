@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  get "profiles/show"
+  get "profiles/edit"
+  get "profiles/update"
   devise_for :users
+  resource :profile, only: [:show, :edit, :update]
 
   resources :companies do
     resources :jobs, only: [:new, :create, :index]
