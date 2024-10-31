@@ -15,22 +15,25 @@
 //     roleSelect.addEventListener('change', toggleCompanyNameField);
 //   });
   
-document.addEventListener('DOMContentLoaded', () => {
+// JavaScript to toggle the visibility of the Company Name field
+document.addEventListener("DOMContentLoaded", function() {
   const roleSelect = document.getElementById('role-select');
   const companyNameField = document.getElementById('company-name-field');
+  const companyIdField = document.getElementById('company-id-field');
 
-  // Function to toggle company name field
-  const toggleCompanyNameField = () => {
+  // Function to toggle visibility based on role selection
+  function toggleCompanyFields() {
     if (roleSelect.value === 'Recruiter') {
       companyNameField.classList.remove('d-none');
-      companyNameField.classList.add('d-block');
+      companyIdField.classList.remove('d-none');
     } else {
-      companyNameField.classList.remove('d-block');
       companyNameField.classList.add('d-none');
+      companyIdField.classList.add('d-none');
     }
-  };
+  }
 
-  // Add event listener
-  roleSelect.addEventListener('change', toggleCompanyNameField);
-  toggleCompanyNameField(); // Initial check
+  // Initial check and event listener for role change
+  toggleCompanyFields(); // Initial check in case of page reload
+  roleSelect.addEventListener('change', toggleCompanyFields);
 });
+

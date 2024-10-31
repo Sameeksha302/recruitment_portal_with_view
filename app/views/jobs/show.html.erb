@@ -1,0 +1,36 @@
+
+
+<div class="container mt-5">
+  <!-- Company Information at the Top -->
+  <h2 class="text-uppercase text-secondary mb-3">Company: <%= @company.name %></h2>
+
+  <!-- Job Details Card -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h3 class="h5 mb-0">Position: <%= @job.title %></h3>
+    </div>
+    <div class="card-body">
+      <!-- Job Details -->
+      <p><strong>Location:</strong> <%= @job.location %></p>
+      <p><strong>Status:</strong> 
+        <span class="badge <%= @job.status == 'Open' ? 'bg-success' : 'bg-danger' %>">
+          <%= @job.status %>
+        </span>
+      </p>
+
+      <hr>
+      
+      <h4 class="h6 text-muted">Job Description:</h4>
+      <p><%= @job.description %></p>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="d-flex justify-content-between">
+    <div>
+      <%= link_to 'Edit Job', edit_company_job_path(@company, @job), class: 'btn btn-outline-primary' %>
+      <%= link_to 'Back to Jobs', company_jobs_path(@company), class: 'btn btn-outline-secondary' %>
+    </div>
+    <%= link_to 'Apply', new_job_job_application_path(@job), class: 'btn btn-success' %>
+  </div>
+</div>

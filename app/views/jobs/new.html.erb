@@ -1,22 +1,51 @@
-<h1>Create a New Job</h1>
-<%= form_with model: @job, local: true do |form| %>
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+<h1 class="my-4 text-center">Create a New Job Listing</h1>
+
+<div class="card mx-auto" style="max-width: 600px;">
+  <div class="card-body">
+    <%= form_with(model: [@company, @job], local: true, class: "form") do |form| %>
+      <% if @job.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h4 class="alert-heading"><%= pluralize(@job.errors.count, "error") %> prevented this job from being saved:</h4>
+          <ul>
+            <% @job.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group mb-3">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-control", placeholder: "Job title" %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Job description" %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= form.label :salary, class: "form-label" %>
+        <%= form.number_field :salary, class: "form-control", placeholder: "Annual salary" %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= form.label :location, class: "form-label" %>
+        <%= form.text_field :location, class: "form-control", placeholder: "Job location" %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= form.label :company_id, class: "form-label" %> <!-- Label for company selection -->
+        <%= form.collection_select :company_id, Company.all, :id, :name, { prompt: "Select a Company" }, class: "form-control" %> <!-- Dropdown for company selection -->
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <%= form.submit "Create Job", class: "btn btn-primary px-4 py-2" %>
+      </div>
+    <% end %>
   </div>
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-  <div>
-    <%= form.label :salary %>
-    <%= form.number_field :salary %>
-  </div>
-  <div>
-    <%= form.label :location %>
-    <%= form.text_field :location %>
-  </div>
-  <div>
-    <%= form.submit "Create Job" %>
-  </div>
-<% end %>
+</div>
+
+<div class="text-center mt-5">
+  <%= link_to 'Back to Jobs', company_jobs_path(@company), class: "btn btn-secondary" %>
+</div>

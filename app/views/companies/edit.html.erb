@@ -1,10 +1,9 @@
-<h1 class="text-center my-4">Create a New Company</h1>
+<h1 class="text-center my-4">Edit Company</h1>
 
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <%= form_with(model: @company, url: companies_path, method: :post, local: true, class: "card p-4 shadow") do |form| %>
-        
+      <%= form_with(model: @company, class: "card p-4 shadow") do |form| %>
         <div class="mb-3">
           <%= form.label :name, class: "form-label" %>
           <%= form.text_field :name, class: "form-control", placeholder: "Enter company name" %>
@@ -21,9 +20,8 @@
         </div>
 
         <div class="d-grid">
-          <%= form.submit "Create Company", class: "btn btn-primary" %>
+          <%= form.submit "Update Company", class: "btn btn-primary" %>
         </div>
-
       <% end %>
     </div>
   </div>

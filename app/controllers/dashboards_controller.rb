@@ -4,7 +4,6 @@ class DashboardsController < ApplicationController
   def index
     @user = current_user
     @company = @user.company # Get the associated company
-
     case @user.role
     when "Admin"
       # Redirect admins to create a new company or display an admin dashboard
@@ -12,11 +11,21 @@ class DashboardsController < ApplicationController
     when "Recruiter"
       if @company
         # If the recruiter has a company, show jobs associated with that company
-        @jobs = @company.jobs
+        # @jobs = @company.jobs
+        @job = @company.jobs.new
+        render 'jobs/new'
       else
         # If no company is associated, redirect to a page to create a new company
-        redirect_to new_company_path, alert: "You need to create a company first."
+        # redirect_to new_company_job_path(current_user.company_id), alert: "You need to create a job post first."
+        @job = @company.jobs
+        render 'jobs'
       end
+      # if current_user.company
+      #   redirect_to new_company_job_path(current_user.company)
+      # else
+      #   # Handle case when recruiter has no company associated
+      #   redirect_to new_company_path, alert: "Please create a company first."
+      # end
     when "Candidate"
       # Candidates see the companies page, potentially with job listings
       redirect_to companies_path

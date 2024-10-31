@@ -1,0 +1,24 @@
+<%= form_with model: [@job, @job_application], local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :applicant_name, 'Full Name' %>
+      <%= f.text_field :applicant_name, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= f.label :applicant_email, 'Email' %>
+      <%= f.email_field :applicant_email, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= f.label :cover_letter, 'Cover Letter' %>
+      <%= f.text_area :cover_letter, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= f.label :resume, 'Resume (URL or upload link)' %>
+      <%= f.text_field :resume, class: 'form-control' %>
+    </div>
+  
+    <%= f.submit 'Submit Application', class: 'btn btn-primary' %>
+  <% end %>
+  

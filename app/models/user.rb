@@ -5,8 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  enum role: { Admin: 0, Recruiter: 1, Candidate: 2 }
+  enum :role, {:Admin=>0, :Recruiter=>1, :Candidate=>2}
 
+  has_many :companies, dependent: :destroy #Admin
   belongs_to :company, optional: true  # Only recruiters and admins are linked to a company
   validates :company_name, presence: true, if: -> { role == 'Recruiter' }
   validates :name,presence: true

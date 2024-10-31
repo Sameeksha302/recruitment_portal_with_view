@@ -3,11 +3,24 @@ Rails.application.routes.draw do
   get "profiles/edit"
   get "profiles/update"
   devise_for :users
-  resource :profile, only: [:show, :edit, :update]
 
+  
   resources :companies do
-    resources :jobs, only: [:new, :create, :index]
+    # resources :jobs, only: [:new, :create, :index]
+    resources :jobs
   end
+
+  resources :jobs do
+    resources :job_applications, only: [:new, :create, :index, :show]
+  end
+0  
+  # resources :jobs, only: [:show,:edit,:update]
+  namespace :public do
+    resources :companies, only: [:index]
+  end
+  resource :profile, only: [:show, :edit, :update]
+  
+  
 
   # Add the main dashboards controller
   root 'dashboards#index'

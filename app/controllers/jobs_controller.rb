@@ -1,62 +1,79 @@
 class JobsController < ApplicationController
-    # Ensure that the user is logged in, and possibly authorized (depending on your app's logic)
-    before_action :set_job, only: [:show, :edit, :update, :destroy]
-  
-    # GET /jobs
-    def index
-      @jobs = Job.all
-      render json: @jobs # Optional: Change this to render a view
-    end
-  
-    # GET /jobs/:id
-    def show
-      render json: @job # Optional: Change this to render a view
-    end
-  
-    # GET /jobs/new
-    def new
-      @job = Job.new
-    end
-  
-    # POST /jobs
-    def create
-      @job = Job.new(job_params)
-      if @job.save
-        redirect_to @job, notice: 'Job was successfully created.'
-      else
-        render :new, status: :unprocessable_entity
-      end
-    end
-  
-    # GET /jobs/:id/edit
-    def edit
-    end
-  
-    # PATCH/PUT /jobs/:id
-    def update
-      if @job.update(job_params)
-        redirect_to @job, notice: 'Job was successfully updated.'
-      else
-        render :edit, status: :unprocessable_entity
-      end
-    end
-  
-    # DELETE /jobs/:id
-    def destroy
-      @job.destroy
-      redirect_to jobs_url, notice: 'Job was successfully deleted.'
-    end
-  
-    private
-  
-    # Set job for the actions that require it (show, edit, update, destroy)
-    def set_job
-      @job = Job.find(params[:id])
-    end
-  
-    # Strong parameters to permit the job attributes
-    def job_params
-      params.require(:job).permit(:title, :description, :location, :company_name, :salary)
+  before_action :authenticate_user!
+  before_action :set_company
+  before_action :set_job, only: [:edit, :update, :destroy]
+  before_action :authorize_recruiter
+
+  def index
+    @jobs = @company.jobs # Start with jobs only from the user's company
+
+    # # Implement search filters
+    # if params[:title].present?
+    #   @jobs = @jobs.where('title ILIKE ?', "%#{params[:title]}%")
+    # end
+
+    # if params[:location].present?
+    #   @jobs = @jobs.where('location ILIKE ?', "%#{params[:location]}%")
+    # end
+
+    # if params[:min_salary].present?
+    #   @jobs = @jobs.where('salary >= ?', params[:min_salary])
+    # end
+
+    # if params[:max_salary].present?
+    #   @jobs = @jobs.where('salary <= ?', params[:max_salary])
+    # end
+
+    # @jobs = @jobs.includes(:company) # Eager load companies to reduce queries
+  end
+
+  def show
+    @job = @company.jobs.find(params[:id])
+  end
+
+  def new
+    @job = @company.jobs.new
+  end
+
+  def create
+    @job = @company.jobs.new(job_params)
+    if @job.save
+      redirect_to company_jobs_path(@company), notice: 'Job created successfully.'
+    else
+      render :new
     end
   end
-  
+
+  def edit; end
+
+  def update
+    if @job.update(job_params)
+      redirect_to company_jobs_path(@company), notice: 'Job updated successfully.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @job.destroy
+    redirect_to company_jobs_path(@company), notice: 'Job deleted successfully.'
+  end
+
+  private
+
+  def set_company
+    @company = current_user.company
+  end
+
+  def set_job
+    @job = @company.jobs.find(params[:id])
+  end
+
+  def authorize_recruiter
+    redirect_to root_path, alert: 'Access denied.' unless current_user.Recruiter?
+  end
+
+  def job_params
+    params.require(:job).permit(:title, :description, :salary, :location, :status)
+  end
+end
