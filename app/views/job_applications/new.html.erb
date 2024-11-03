@@ -1,24 +1,38 @@
-<%= form_with model: [@job, @job_application], local: true do |f| %>
-    <div class="form-group">
-      <%= f.label :applicant_name, 'Full Name' %>
-      <%= f.text_field :applicant_name, class: 'form-control' %>
+<%= form_with model: [@job, @job_application], local: true, multipart: true, class: "p-4 border rounded shadow-sm bg-light" do |f| %>
+  <h4 class="text-center mb-4 text-primary">Apply for <%= @job.title %></h4>
+
+  <% if @job_application.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading">Please fix the following errors:</h4>
+      <ul>
+        <% @job_application.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %> <!-- Missing 'end' for errors.full_messages.each -->
+      </ul>
     </div>
-  
-    <div class="form-group">
-      <%= f.label :applicant_email, 'Email' %>
-      <%= f.email_field :applicant_email, class: 'form-control' %>
-    </div>
-  
-    <div class="form-group">
-      <%= f.label :cover_letter, 'Cover Letter' %>
-      <%= f.text_area :cover_letter, class: 'form-control' %>
-    </div>
-  
-    <div class="form-group">
-      <%= f.label :resume, 'Resume (URL or upload link)' %>
-      <%= f.text_field :resume, class: 'form-control' %>
-    </div>
-  
-    <%= f.submit 'Submit Application', class: 'btn btn-primary' %>
   <% end %>
-  
+
+  <div class="form-group mb-3">
+    <%= f.label :applicant_name, 'Full Name', class: 'form-label' %>
+    <%= f.text_field :applicant_name, class: 'form-control', value: current_user.name, readonly: true %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :applicant_email, 'Email', class: 'form-label' %>
+    <%= f.email_field :applicant_email, class: 'form-control', value: current_user.email, readonly: true %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :cover_letter, 'Cover Letter', class: 'form-label' %>
+    <%= f.text_area :cover_letter, class: 'form-control', rows: 4, placeholder: "Write a brief cover letter" %>
+  </div>
+
+  <div class="form-group mb-4">
+    <%= f.label :resume, 'Resume (Upload your file)', class: 'form-label' %>
+    <%= f.file_field :resume, class: 'form-control' %>
+  </div>
+
+  <div class="text-center">
+    <%= f.submit 'Submit Application', class: 'btn btn-primary px-4 py-2' %>
+  </div>
+<% end %>

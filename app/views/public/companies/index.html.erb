@@ -24,28 +24,42 @@
     </div>
   <% end %>
 
-  <% @companies.each do |company| %>
-    <div class="card mb-4">
-      <div class="card-header">
-        <h3 class="mb-0"><%= company.name %></h3>
-      </div>
-      <div class="card-body">
-        <% if company.jobs.active.any? %>
-          <div class="list-group">
-            <% company.jobs.active.each do |job| %>
-              <div class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <%= link_to job.title, company_job_path(company, job), class: "text-decoration-none fw-bold" %>
-                  <p class="mb-1 text-muted"><%= job.description.truncate(100) %></p>
+  <% if @companies.any? %>
+    <% @companies.each do |company| %>
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="mb-0"><%= company.name %></h3>
+        </div>
+        <div class="card-body">
+          <% jobs_to_display = @filters_applied ? (@filtered_jobs[company.id] || []) : company.jobs.active %>
+          <% if jobs_to_display.any? %>
+            <div class="list-group">
+              <% jobs_to_display.each do |job| %>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <%= link_to job.title, company_job_path(company, job), class: "text-decoration-none fw-bold" %>
+                    <p class="mb-1 text-muted"><%= job.description.truncate(100) %></p>
+                  </div>
+                  <span class="badge bg-primary rounded-pill"><%= job.location %></span>
                 </div>
-                <span class="badge bg-primary rounded-pill"><%= job.location %></span>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-muted">No active jobs available for this company.</p>
-        <% end %>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-muted">No active jobs available for this company.</p>
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
+  <% else %>
+    <!-- Display this message if no companies or jobs match the search criteria -->
+    <p class="text-center text-muted">
+      No companies or jobs found for 
+      <%= "Company Name: '#{params[:company_name]}'" if params[:company_name].present? %>
+      <%= ", Title: '#{params[:title]}'" if params[:title].present? %>
+      <%= ", Location: '#{params[:location]}'" if params[:location].present? %>
+      <%= ", Min Salary: '#{params[:min_salary]}'" if params[:min_salary].present? %>
+      <%= ", Max Salary: '#{params[:max_salary]}'" if params[:max_salary].present? %>.
+      Please try different filters.
+    </p>
   <% end %>
 </div>

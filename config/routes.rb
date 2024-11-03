@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   get "profiles/show"
   get "profiles/edit"
   get "profiles/update"
@@ -11,7 +13,8 @@ Rails.application.routes.draw do
   end
 
   resources :jobs do
-    resources :job_applications, only: [:new, :create, :index, :show]
+    # resources :job_applications, only: [:new, :create, :index, :show]
+    resources :job_applications, only: [:new, :create]
   end
 0  
   # resources :jobs, only: [:show,:edit,:update]

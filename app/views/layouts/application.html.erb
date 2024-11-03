@@ -29,9 +29,18 @@
         <% end %>
       </div>
     </div>
+
+    <% if notice %>
+      <div><p class="notice"><%= notice %></p></div>
+      <script>
+      setTimeout(function() {
+        document.querySelector('.notice').style.display = 'none';
+      }, 5000);
+    </script>
+    <% end %>
     
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    
+    <p class="alert"><%= alert %></p> 
 
     <%= yield %>
   </body>

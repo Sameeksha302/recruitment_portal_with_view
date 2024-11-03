@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+    }
+    .header {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 24px;
+    }
+    .content {
+      padding: 20px;
+    }
+    .footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      Job Posted Confirmation
+    </div>
+
+    <div class="content">
+      <p>Hello <%= @recruiter.name %>,</p>
+      <p>Your job listing for the position of <strong><%= @job.title %></strong> has been successfully posted.</p>
+      <p>Thank you for using our platform to share your job opportunities!</p>
+      <p>You can manage this posting from your account dashboard.</p>
+      <a href="<%= job_url(@job) %>" class="button">View Job Posting</a>
+    </div>
+
+    
+
+    <div class="footer">
+        © <%= Time.current.year %> <%= @job.company.name %>. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+Functional Requirements Specification (FRS) for Recruitment Portal Demo Project
+
+1. Project Overview
+The Recruitment Portal is a demo project built using Ruby on Rails (RoR) that allows recruiters (who are linked to companies) to post
+job vacancies on behalf of their company, candidates to apply to these jobs, and companies to be created and managed. The project will 
+include features for company creation, job listing, candidate application, email notifications using Sidekiq, testing with RSpec, and deployment
+readiness. The entire project will be completed within 5 days.
+
+2. Scope
+The portal will support:
+Company creation and management.
+Recruiter login and posting job vacancies on behalf of their associated company.
+Candidate registration and application to jobs posted by companies.
+Listing of available jobs across companies.
+Automated email notifications for both recruiters and candidates.
+Apply on job applications.
+
+3. Modules and Features
+
+3.1 User Management
+User Types:
+Admin (Have a Company)
+Recruiters (linked to a Company)
+Candidates
+Features:
+Registration/Login for recruiters and candidates using Devise.
+Password reset via email.
+Profile management for both recruiters and candidates.
+
+3.2 Company Management
+Company Creation:
+Admin can create new companies.
+Each company will have fields: name, address, and industry type.
+Companies are visible in a company listing.
+Company Listing:
+A public list of all companies with available jobs is accessible.
+Candidates can view details about each company.
+
+3.3 Job Management (Recruiter)
+Job Posting:
+Recruiters can create, edit, and delete job posts for their associated company.
+Each job post will have fields: title, description, salary, location, and company details.
+A list of posted jobs is visible to the recruiter and linked to their company profile.
+Job Status:
+Set job post status to Active/Closed.
+
+3.4 Job Applications (Candidate)
+Job Search:
+Candidates can view and search for jobs based on the company, title, location, or salary range.
+Candidates can browse jobs by company.
+Apply for Job:
+Candidates can apply for jobs by submitting a resume (file upload) and a short cover letter.
+An application confirmation will be sent to the candidate via email.
+The recruiter linked to the company receives a notification when an application is submitted.
+
+3.5 Email Notifications (Sidekiq)
+Trigger Points:
+When a job is posted, the recruiter receives a confirmation email.
+When a candidate applies for a job, the recruiter and candidate receive emails.
+Background Processing:
+Use Sidekiq to handle email notifications asynchronously to improve user experience.
+
+3.6 Company and Job Listings
+Company Listing:
+Publicly accessible list of companies with job openings.
+Each company profile includes job listings.
+Job Listing:
+List all available jobs with filtering options (by company, location, salary, etc.).
+
+
+
+
+
+4. Non-Functional Requirements
+4.2 Security
+Use Devise for secure authentication.
+Ensure data validation and protection against SQL injection and XSS.
+4.3 Testing (RSpec)
+Unit tests for models and controllers using RSpec.
+Integration tests for user flows (recruiter posting a job, candidate applying for a job).
+Test mailer functionality.
+4.4 Deployment
+The application must be deployable to a production environment (e.g., Heroku, Render).
+Configuration for Sidekiq worker setup must be included.

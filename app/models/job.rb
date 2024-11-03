@@ -2,7 +2,7 @@ class Job < ApplicationRecord
   belongs_to :company
   # has_many :applications, dependent: :destroy
   has_many :job_applications, dependent: :destroy
-
+  belongs_to :Recruiter, class_name: 'User', foreign_key: 'recruiter_id'
   enum status: { :active=>0, :closed=>1 }
 
   scope :active_jobs, -> { where(status: :active) }
