@@ -9,8 +9,10 @@ class EmailNotificationJob
         NotificationMailer.job_posted_email(recruiter, job).deliver_now
       when 'application_submitted'
         job_application = JobApplication.find(args[0])
-        NotificationMailer.notify_recruiter(job_application).deliver_now
-        NotificationMailer.application_confirmation(job_application).deliver_now
+        # NotificationMailer.notify_recruiter(job_application).deliver_now
+        # NotificationMailer.application_confirmation(job_application).deliver_now
+        ApplicationMailer.notify_recruiter(job_application).deliver_now
+        ApplicationMailer.application_confirmation(job_application).deliver_now
       end
     end
 end

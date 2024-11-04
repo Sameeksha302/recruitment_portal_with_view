@@ -12,7 +12,8 @@
         <p class="card-text"><strong>Company Name:</strong> <%= @user.company_name if @user.company_name.present? %></p>
       <% end %>
 
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-between">
+        <%= link_to 'Back', 'javascript:history.back()', class: 'btn btn-secondary' %>
         <%= link_to 'Edit Profile', edit_profile_path, class: 'btn btn-primary' %>
       </div>
     </div>

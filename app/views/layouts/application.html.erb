@@ -19,13 +19,24 @@
   </head>
 
   <body>
-    <!-- Right-aligned profile, public companies, and log out buttons -->
+    <!-- Right-aligned profile, create job, public companies, and log out buttons -->
     <div class="container">
       <div class="d-flex justify-content-end mt-3">
         <% if user_signed_in? %>
           <%= link_to "Profile", profile_path, class: "btn btn-primary me-2" %>
+          
+          <!-- Show "Create New Job" button only if user is a recruiter -->
+          <% if current_user.role == "Recruiter" %>
+            <%= link_to "Create New Job", new_job_path, class: "btn btn-warning me-2" %>
+          <% end %>
+          
+          <!-- Show "Create New Company" button only if user is an admin -->
+          <% if current_user.role == "Admin" %>
+            <%= link_to "Create New Company", new_company_path, class: "btn btn-success me-2" %>
+          <% end %>
+          
           <%= link_to "Companies with Jobs", public_companies_path, class: "btn btn-secondary me-2" %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger me-2" %>
         <% end %>
       </div>
     </div>
@@ -36,11 +47,17 @@
       setTimeout(function() {
         document.querySelector('.notice').style.display = 'none';
       }, 5000);
-    </script>
+      </script>
     <% end %>
-    
-    
-    <p class="alert"><%= alert %></p> 
+
+    <% if alert %>
+      <div><p class="alert"><%= alert %></p></div>
+      <script>
+      setTimeout(function() {
+        document.querySelector('.alert').style.display = 'none';
+      }, 5000);
+      </script>
+    <% end %>
 
     <%= yield %>
   </body>
