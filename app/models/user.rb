@@ -29,14 +29,14 @@ class User < ApplicationRecord
 
   def set_company_id
     return if company_name.nil? # Skip if no company_name is provided
-  
+
     company = Company.find_by(name: self.company_name)
     if company.present?
       self.company_id = company.id
       self.save!
     end
   end
-  
+
 
   private
   def set_default_role

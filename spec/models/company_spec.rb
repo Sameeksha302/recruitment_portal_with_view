@@ -55,7 +55,7 @@ RSpec.describe Company, type: :model do
   it "destroys associated jobs when the company is destroyed" do
     company = create(:company)
     job = create(:job, company: company)
-  
+
     expect { company.destroy }.to change(Job, :count).by(-1)
   end
 end

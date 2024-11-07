@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
 
     context 'email uniqueness' do
       before { create(:user, email: "test@example.com") }
-    
+
       it 'does not allow duplicate email (case insensitive)' do
         new_user = build(:user, email: "TEST@example.com")
         expect(new_user).not_to be_valid
@@ -26,7 +26,7 @@ RSpec.describe User, type: :model do
       subject { build(:user, :recruiter) }
 
       it { is_expected.to validate_presence_of(:company_name) }
-    
+
 
       it 'requires company_name to be present' do
         subject.company_name = nil
