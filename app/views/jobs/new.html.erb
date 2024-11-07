@@ -33,7 +33,6 @@
         <%= form.label :location, class: "form-label" %>
         <%= form.text_field :location, class: "form-control", placeholder: "Job location" %>
       </div>
-
       <% if current_user.Recruiter? %>
         <div class="form-group mb-3">
           <%= form.label :company_id, "Company", class: "form-label" %>

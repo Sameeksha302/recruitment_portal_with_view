@@ -52,8 +52,6 @@
           <%= f.text_field :company_name, class: 'form-control' %>
         </div>
 
-        
-
         <!-- Submit Button -->
         <div class="d-grid">
           <%= f.submit "Sign up", class: "btn btn-primary" %>
@@ -66,3 +64,31 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener("turbo:load", function() {
+    const roleSelect = document.getElementById('role-select');
+    const companyNameField = document.getElementById('company-name-field');
+    const companyIdField = document.getElementById('company-id-field');
+
+    // Function to toggle visibility based on role selection
+    function toggleCompanyFields() {
+      const isRecruiter = roleSelect.value === 'Recruiter';
+      console.log('Role selected:', roleSelect.value); // Log selected role
+      console.log('Is recruiter:', isRecruiter); // Log if recruiter
+
+      // Toggle visibility of the company fields
+      companyNameField.classList.toggle('d-none', !isRecruiter);
+      companyIdField.classList.toggle('d-none', !isRecruiter);
+    }
+
+    // Initial check to set the fields visibility on page load
+    toggleCompanyFields();
+
+    // Add event listener for the role selection dropdown
+    roleSelect.addEventListener('change', function() {
+      console.log('Role changed, updating visibility...'); // Log on role change
+      toggleCompanyFields();
+    });
+  });
+</script>
+

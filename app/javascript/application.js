@@ -4,4 +4,4 @@ import "controllers"
 // app/javascript/application.js
 
 // Other imports
-import "./recruiter_role_toggle";
+

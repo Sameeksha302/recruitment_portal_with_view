@@ -101,7 +101,6 @@ class JobsController < ApplicationController
       @jobs = Job.all # Or handle other roles accordingly
     end
   end
-
   def show; end
 
   def new
@@ -115,11 +114,13 @@ class JobsController < ApplicationController
 
   def create
     @job = current_user.company.jobs.new(job_params) # Use current user's company to build the job
-    @job.Recruiter = current_user # Assign the current user as the recruiter
+    # @job.Recruiter = current_user # Assign the current user as the recruiter 
+    @job.recruiter_id = current_user.id 
     if @job.save
       begin
         # NotificationMailer.job_posted_email(current_user, @job).deliver_now
         EmailNotificationJob.perform_async('job_posted', @job.recruiter_id, @job.id)
+        # EmailNotificationJob.perform_later('job_posted', @job.recruiter_id, @job.id)
       rescue StandardError => e
         Rails.logger.error("Failed to send job posted email: #{e.message}")
         flash[:alert] = 'Job created, but there was an issue sending the email notification.'
@@ -171,7 +172,7 @@ class JobsController < ApplicationController
 
   def set_job
     @job = @company.jobs.find_by(id: params[:id])
-    redirect_to company_jobs_path(@company), alert: 'Job not found.' unless @job
+    redirect_to company_jobs_path(@company), alert: 'Job not found.' unless @job.present?
   end
 
   def authorize_recruiter
@@ -179,6 +180,6 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:title, :description, :salary, :location, :status)
+    params.require(:job).permit(:title, :description, :salary, :location, :status,:company_id)
   end
 end

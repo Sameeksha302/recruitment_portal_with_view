@@ -9,6 +9,10 @@ class EmailNotificationJob
         NotificationMailer.job_posted_email(recruiter, job).deliver_now
       when 'application_submitted'
         job_application = JobApplication.find(args[0])
+        if job_application.nil?
+          Rails.logger.error("JobApplication with ID #{args[0]} not found.")
+          return
+        end
         # NotificationMailer.notify_recruiter(job_application).deliver_now
         # NotificationMailer.application_confirmation(job_application).deliver_now
         ApplicationMailer.notify_recruiter(job_application).deliver_now

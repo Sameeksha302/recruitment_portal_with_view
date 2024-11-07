@@ -1,7 +1,6 @@
 <div class="container mt-5">
   <%= form_with model: [@job, @job_application], local: true, data: { turbo: false }, multipart: true, class: "p-4 border rounded shadow-sm bg-light" do |f| %>
     <h4 class="text-center mb-4 text-primary">Apply for <%= @job.title %></h4>
-
     <% if @job_application.errors.any? %>
       <div class="alert alert-danger">
         <h4 class="alert-heading">Please fix the following errors:</h4>

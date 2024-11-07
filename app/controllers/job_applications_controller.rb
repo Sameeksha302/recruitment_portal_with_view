@@ -119,23 +119,26 @@ class JobApplicationsController < ApplicationController
 
     if @job_application.save
       # Send confirmation email to 
-      debugger
       begin
         # ApplicationMailer.application_confirmation(@job_application).deliver_now
+        flash[:notice] = 'Application submitted successfully.'
         EmailNotificationJob.perform_async('application_submitted', @job_application.id)
 
         # Send notification to recruiter
         # ApplicationMailer.notify_recruiter(@job_application).deliver_now
 
         # redirect_to job_path(@job), notice: 'Application submitted successfully.'
-        redirect_to new_company_path,notice: 'Application submitted successfully.'
+        # redirect_to new_company_path,notice: 'Application submitted successfully.'
+        redirect_to public_companies_path
+        #redirect_to public_companies_path,notice: 'Application submitted successfully.'
       rescue StandardError => e
-        Rails.logger.error("Failed to send email: #{e.message}")
+        # Rails.logger.error("Failed to send email: #{e.message}")
         flash[:alert] = 'Application submitted, but there was an issue sending confirmation emails.'
-        redirect_to job_path(@job)
+        # redirect_to job_path(@job)
+        redirect_to public_companies_path
       end
     else
-      
+      # flash.now[:alert] = 'There was an error submitting your application. Please fix the errors below.'
       render :new
     end
   end
