@@ -16,5 +16,3 @@ class NotificationMailer < ApplicationMailer
     end
 end
   
-
-# NotificationMailer.job_posted_email(current_user, @job).deliver_later

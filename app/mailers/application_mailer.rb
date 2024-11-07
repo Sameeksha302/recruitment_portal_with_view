@@ -1,10 +1,3 @@
-# class ApplicationMailer < ActionMailer::Base
-#   default from: "from@example.com"
-#   layout "mailer"
-# end
-
-
-# app/mailers/application_mailer.rb
 class ApplicationMailer < ActionMailer::Base
   default from: "sameekshasingh951@gmail.com"
   layout "mailer"
@@ -16,7 +9,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def notify_recruiter(job_application)
     @job_application = job_application
-    @job = @job_application.job  # Set @job from @job_application
+    @job = @job_application.job 
 
     if @job && @job.user.present?
       recruiter_email = @job.user.email

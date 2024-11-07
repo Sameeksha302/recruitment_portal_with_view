@@ -31,18 +31,20 @@
     </div>
   </div>
 
-  <!-- Action Buttons -->
   <div class="d-flex justify-content-between">
-    <% if current_user.Candidate? %>
-      <div>
+  <% if current_user.Candidate? %>
+    <div>
+      <% if request.referer.present? %>
+        <%= link_to 'Back', request.referer, class: 'btn btn-outline-secondary' %>
+      <% else %>
         <%= link_to 'Back to Jobs', company_jobs_path(@company), class: 'btn btn-outline-secondary' %>
-      </div>
-      <%= link_to 'Apply', new_job_job_application_path(@job), class: 'btn btn-success' %>
-    <% else %>
-      <div>
-        <%= link_to 'Edit Job', edit_company_job_path(@company, @job), class: 'btn btn-outline-primary' %>
-        <%= link_to 'Back to Jobs', company_jobs_path(@company), class: 'btn btn-outline-secondary' %>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+    <%= link_to 'Apply', new_job_job_application_path(@job), class: 'btn btn-success' %>
+  <% else %>
+    <div>
+      <%= link_to 'Edit Job', edit_company_job_path(@company, @job), class: 'btn btn-outline-primary' %>
+      <%= link_to 'Back to Jobs', company_jobs_path(@company), class: 'btn btn-outline-secondary' %>
+    </div>
+  <% end %>
 </div>
