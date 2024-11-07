@@ -14,7 +14,7 @@
             <!-- Show Edit and Delete buttons only for non-candidates -->
             <div class="d-flex justify-content-between mt-4">
               <%= link_to 'Edit', edit_company_path(@company), class: "btn btn-secondary" %>
-              <%= link_to 'Delete', company_path(@company), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              <%= button_to 'Delete', company_path(@company), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
             </div>
           <% end %>
 

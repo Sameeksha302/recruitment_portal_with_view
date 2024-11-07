@@ -1,5 +1,3 @@
-# spec/models/company_spec.rb
-
 require 'rails_helper'
 
 RSpec.describe Company, type: :model do
@@ -30,8 +28,8 @@ RSpec.describe Company, type: :model do
   # Test association with users
   it "can have many users" do
     company = create(:company)
-    user1 = create(:user, company: company)
-    user2 = create(:user, company: company)
+    user1 = create(:user, :recruiter, company: company)  # No need to pass company explicitly
+    user2 = create(:user, :recruiter, company: company)
 
     expect(company.users).to include(user1, user2)
   end
@@ -39,12 +37,12 @@ RSpec.describe Company, type: :model do
   # Test dependent destroy on users
   it "destroys associated users when the company is destroyed" do
     company = create(:company)
-    user = create(:user, company: company)
+    create(:user, :recruiter, company: company)
 
-    expect { company.destroy }.to change { User.count }.by(-1)
+    expect { company.destroy }.to change(User, :count).by(-1)
   end
 
-  # Test associated jobs (if any)
+  # Test association with jobs
   it "can have many jobs" do
     company = create(:company)
     job1 = create(:job, company: company)
@@ -57,7 +55,7 @@ RSpec.describe Company, type: :model do
   it "destroys associated jobs when the company is destroyed" do
     company = create(:company)
     job = create(:job, company: company)
-
-    expect { company.destroy }.to change { Job.count }.by(-1)
+  
+    expect { company.destroy }.to change(Job, :count).by(-1)
   end
 end

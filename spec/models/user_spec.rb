@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
 
     context 'email uniqueness' do
       before { create(:user, email: "test@example.com") }
-
+    
       it 'does not allow duplicate email (case insensitive)' do
         new_user = build(:user, email: "TEST@example.com")
         expect(new_user).not_to be_valid
@@ -26,18 +26,12 @@ RSpec.describe User, type: :model do
       subject { build(:user, :recruiter) }
 
       it { is_expected.to validate_presence_of(:company_name) }
-      it { is_expected.to validate_presence_of(:company_id) }
+    
 
       it 'requires company_name to be present' do
         subject.company_name = nil
         expect(subject).not_to be_valid
         expect(subject.errors[:company_name]).to include("can't be blank")
-      end
-
-      it 'requires company_id to be present' do
-        subject.company_id = nil
-        expect(subject).not_to be_valid
-        expect(subject.errors[:company_id]).to include("can't be blank")
       end
     end
 
@@ -86,6 +80,12 @@ RSpec.describe User, type: :model do
     it 'sets a default role if none is provided' do
       user = User.create(email: "default@example.com", password: "password", name: "Test User")
       expect(user.role).to eq("Candidate")
+    end
+
+    it 'sets company_id after creation if company_name is present' do
+      company = create(:company)
+      user = create(:user, :recruiter, company_name: company.name)
+      expect(user.company_id).to eq(company.id)
     end
   end
 end

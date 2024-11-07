@@ -40,17 +40,14 @@
           <%= f.select :role, options_for_select([['Admin', 'Admin'], ['Recruiter', 'Recruiter'], ['Candidate', 'Candidate']], resource.role), {}, class: 'form-select', id: 'role-select' %>
         </div>
 
-        <!-- Company ID Field for Recruiters (initially hidden) -->
-        <div class="mb-3 d-none" id="company-id-field">
-          <%= f.label :company_id, 'Company ID', class: 'form-label' %>
-          <%= f.text_field :company_id, class: 'form-control' %>
-        </div>
+      
 
-        <!-- Company Name Field for Recruiters (initially hidden) -->
-        <div class="mb-3 d-none" id="company-name-field">
+        <!-- Company Name Field for Recruiters -->
+        <div class="mb-3 <%= resource.role == 'Recruiter' ? '' : 'd-none' %>" id="company-name-field">
           <%= f.label :company_name, 'Company Name', class: 'form-label' %>
           <%= f.text_field :company_name, class: 'form-control' %>
         </div>
+
 
         <!-- Submit Button -->
         <div class="d-grid">
@@ -65,30 +62,21 @@
   </div>
 </div>
 <script>
-  document.addEventListener("turbo:load", function() {
-    const roleSelect = document.getElementById('role-select');
-    const companyNameField = document.getElementById('company-name-field');
-    const companyIdField = document.getElementById('company-id-field');
+document.addEventListener("turbo:load", function() {
+  const roleSelect = document.getElementById('role-select');
+  const companyNameField = document.getElementById('company-name-field');
 
-    // Function to toggle visibility based on role selection
-    function toggleCompanyFields() {
-      const isRecruiter = roleSelect.value === 'Recruiter';
-      console.log('Role selected:', roleSelect.value); // Log selected role
-      console.log('Is recruiter:', isRecruiter); // Log if recruiter
+  // Function to toggle visibility based on role selection
+  function toggleCompanyFields() {
+    const isRecruiter = roleSelect.value === 'Recruiter';
+    companyNameField.classList.toggle('d-none', !isRecruiter);
+  }
 
-      // Toggle visibility of the company fields
-      companyNameField.classList.toggle('d-none', !isRecruiter);
-      companyIdField.classList.toggle('d-none', !isRecruiter);
-    }
+  // Ensure correct visibility on page load (covers form re-render due to validation errors)
+  toggleCompanyFields();
 
-    // Initial check to set the fields visibility on page load
-    toggleCompanyFields();
-
-    // Add event listener for the role selection dropdown
-    roleSelect.addEventListener('change', function() {
-      console.log('Role changed, updating visibility...'); // Log on role change
-      toggleCompanyFields();
-    });
-  });
+  // Add event listener for the role selection dropdown
+  roleSelect.addEventListener('change', toggleCompanyFields);
+});
 </script>
 
