@@ -1,0 +1,3 @@
+my_scheduled_job:
+  class: "EmailNotificationJob"
+  queue: default
