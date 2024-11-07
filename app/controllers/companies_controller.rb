@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_company, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @companies = Company.all
@@ -19,21 +19,21 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      redirect_to @company, notice: 'Company was successfully created.'
+      redirect_to @company, notice: "Company was successfully created."
     else
       # flash.now[:alert] = @company.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
   end
 
- 
+
   def edit
   end
 
 
   def update
     if @company.update(company_params)
-      redirect_to @company, notice: 'Company was successfully updated.'
+      redirect_to @company, notice: "Company was successfully updated."
     else
       # flash.now[:alert] = @company.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
@@ -43,7 +43,7 @@ class CompaniesController < ApplicationController
 
   def destroy
     @company.destroy
-    flash[:notice] = 'Company was successfully deleted.'
+    flash[:notice] = "Company was successfully deleted."
     redirect_to companies_path
   end
 

@@ -1,13 +1,13 @@
 class EmailNotificationJob
     include Sidekiq::Job
-  
+
     def perform(action, *args)
       case action
-      when 'job_posted'
+      when "job_posted"
         recruiter = User.find(args[0])
         job = Job.find(args[1])
         NotificationMailer.job_posted_email(recruiter, job).deliver_now
-      when 'application_submitted'
+      when "application_submitted"
         job_application = JobApplication.find(args[0])
         if job_application.nil?
           Rails.logger.error("JobApplication with ID #{args[0]} not found.")
@@ -18,4 +18,3 @@ class EmailNotificationJob
       end
     end
 end
-  

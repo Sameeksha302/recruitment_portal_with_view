@@ -33,22 +33,21 @@ RSpec.feature "Candidate Applying for a Job", type: :feature do
 
   scenario "Candidate fails to apply for a job due to validation errors" do
     visit company_job_path(company, job)
-  
+
     expect(page).to have_link('Apply', href: new_job_job_application_path(job))
-  
+
     click_link 'Apply'
-  
+
     expect(page).to have_current_path(new_job_job_application_path(job))
-  
+
     # Leave fields blank to trigger validation errors
     fill_in "Cover Letter", with: ""
-  
+
     click_button "Submit Application"
-  
+
     # Check for validation error messages
     expect(page).to have_text("Please fix the following errors:")
     expect(page).to have_text("Cover letter can't be blank")
     expect(page).to have_text("Resume can't be blank")
   end
-  
 end

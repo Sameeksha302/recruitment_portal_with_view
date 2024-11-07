@@ -15,7 +15,7 @@ RSpec.describe JobsController, type: :controller do
     context 'when the user is a recruiter' do
       it 'assigns @jobs to the recruiter’s company jobs' do
         get :index, params: { company_id: company.id }
-        expect(assigns(:jobs)).to eq([job])
+        expect(assigns(:jobs)).to eq([ job ])
         expect(response).to render_template(:index)
       end
     end
@@ -52,12 +52,12 @@ RSpec.describe JobsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:valid_attributes) { 
-      { 
-        title: "Software Engineer", 
-        description: "Develop and maintain software applications.", 
-        salary: 70000, 
-        location: "New York" 
+    let(:valid_attributes) {
+      {
+        title: "Software Engineer",
+        description: "Develop and maintain software applications.",
+        salary: 70000,
+        location: "New York"
       }
     }
 

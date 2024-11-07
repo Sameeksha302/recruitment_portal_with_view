@@ -85,7 +85,7 @@ Rails.application.configure do
     port: 587,
     domain: "gmail.com",
     user_name: "sameekshasingh951@gmail.com", # Use "apikey" as the username
-    password: "pehr rkgp gidy uraj", #Rails.application.credentials.dig(:sendgrid, :api_key)
+    password: "pehr rkgp gidy uraj", # Rails.application.credentials.dig(:sendgrid, :api_key)
     authentication: :plain,
     enable_starttls_auto: true
   }

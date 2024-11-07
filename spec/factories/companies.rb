@@ -5,7 +5,7 @@
 #       name { "Example Company" }
 #       address { "123 Main St, Anytown, USA" }
 #       industry_type { "Technology" }
-  
+
 #       # You can also create associated users or jobs within the company factory
 #       # Example of creating associated users (optional):
 #       after(:create) do |company|

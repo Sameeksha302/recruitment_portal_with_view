@@ -52,7 +52,6 @@ RSpec.describe JobApplicationsController, type: :controller do
       it 'renders the new template with an alert message' do
         post :create, params: { job_id: job.id, job_application: { cover_letter: '' } }
         expect(response).to render_template(:new)
-     
       end
 
       it 'does not create a new job application' do

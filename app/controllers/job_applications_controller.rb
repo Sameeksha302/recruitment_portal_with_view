@@ -1,6 +1,6 @@
 class JobApplicationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_job, only: [:new, :create]
+  before_action :set_job, only: [ :new, :create ]
 
   def new
     @job_application = @job.job_applications.new(
@@ -16,11 +16,11 @@ class JobApplicationsController < ApplicationController
     if @job_application.save
       begin
         # ApplicationMailer.application_confirmation(@job_application).deliver_now
-        flash[:notice] = 'Application submitted successfully.'
-        EmailNotificationJob.perform_async('application_submitted', @job_application.id)
+        flash[:notice] = "Application submitted successfully."
+        EmailNotificationJob.perform_async("application_submitted", @job_application.id)
         redirect_to public_companies_path
       rescue StandardError => e
-        flash[:alert] = 'Application submitted, but there was an issue sending confirmation emails.'
+        flash[:alert] = "Application submitted, but there was an issue sending confirmation emails."
         redirect_to public_companies_path
       end
     else

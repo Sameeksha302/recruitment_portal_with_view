@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [ :create ]
   # before_action :configure_account_update_params, only: [:update]
   # before_action :configure_sign_up_params, only: [:create]
 
@@ -16,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       Rails.logger.info "Parameters: #{resource.inspect}"
     end
   end
-  
+
 
   # GET /resource/edit
   # def edit
@@ -66,16 +66,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
-  
+
 
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:role])
   # end
 
-  
+
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name,:email, :password, :password_confirmation, :role, :company_name,:company_id])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :email, :password, :password_confirmation, :role, :company_name, :company_id ])
   end
- 
 end

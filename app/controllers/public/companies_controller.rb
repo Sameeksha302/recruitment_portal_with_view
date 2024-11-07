@@ -26,4 +26,3 @@ class Public::CompaniesController < ApplicationController
     end
   end
 end
-
