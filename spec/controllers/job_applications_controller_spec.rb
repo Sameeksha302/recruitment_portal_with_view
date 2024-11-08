@@ -37,7 +37,7 @@ RSpec.describe JobApplicationsController, type: :controller do
           post :create, params: { job_id: job.id, job_application: valid_attributes }
         }.to have_enqueued_job(EmailNotificationJob).with("application_submitted", instance_of(Integer))
       end
-      
+
 
       it 'creates a new job application' do
         expect {
