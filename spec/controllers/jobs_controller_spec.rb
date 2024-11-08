@@ -71,9 +71,11 @@ RSpec.describe JobsController, type: :controller do
       end
 
       it 'enqueues a job posted email notification' do
-        expect(EmailNotificationJob).to receive(:perform_async).with('job_posted', recruiter.id, instance_of(Integer))
-        post :create, params: { company_id: company.id, job: valid_attributes }
+        expect {
+          post :create, params: { company_id: company.id, job: valid_attributes }
+        }.to have_enqueued_job(EmailNotificationJob).with('job_posted', recruiter.id, instance_of(Integer))
       end
+      
     end
 
     context 'with invalid attributes' do

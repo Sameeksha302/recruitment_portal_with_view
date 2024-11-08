@@ -3,6 +3,7 @@ require 'rails_helper'
 require 'sidekiq/testing'
 # Sidekiq::Testing.inline!
 
+
 RSpec.describe JobApplicationsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
@@ -34,8 +35,9 @@ RSpec.describe JobApplicationsController, type: :controller do
       it 'queues an email notification job' do
         expect {
           post :create, params: { job_id: job.id, job_application: valid_attributes }
-        }.to change(EmailNotificationJob.jobs, :size).by(1)
+        }.to have_enqueued_job(EmailNotificationJob).with("application_submitted", instance_of(Integer))
       end
+      
 
       it 'creates a new job application' do
         expect {

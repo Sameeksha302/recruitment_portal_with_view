@@ -10,7 +10,6 @@ class ApplicationMailer < ActionMailer::Base
   def notify_recruiter(job_application)
     @job_application = job_application
     @job = @job_application.job
-
     if @job && @job.user.present?
       recruiter_email = @job.user.email
       mail(to: recruiter_email, subject: "New Job Application Submitted")

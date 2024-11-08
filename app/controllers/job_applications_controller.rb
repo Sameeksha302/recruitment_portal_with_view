@@ -17,7 +17,8 @@ class JobApplicationsController < ApplicationController
       begin
         # ApplicationMailer.application_confirmation(@job_application).deliver_now
         flash[:notice] = "Application submitted successfully."
-        EmailNotificationJob.perform_async("application_submitted", @job_application.id)
+        # EmailNotificationJob.perform_async("application_submitted", @job_application.id)
+        EmailNotificationJob.perform_later("application_submitted", @job_application.id)
         redirect_to public_companies_path
       rescue StandardError => e
         flash[:alert] = "Application submitted, but there was an issue sending confirmation emails."

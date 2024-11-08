@@ -1,5 +1,6 @@
-class EmailNotificationJob
-    include Sidekiq::Job
+class EmailNotificationJob < ApplicationJob
+  queue_as :default
+    # include Sidekiq::Job
 
     def perform(action, *args)
       case action
