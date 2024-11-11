@@ -1,6 +1,6 @@
-<h1 class="my-4 text-center">Create a New Job Listing</h1>
+<h1 class="my-4 text-center text-primary heading">Create a New Job Listing</h1>
 
-<div class="card mx-auto" style="max-width: 600px;">
+<div class="card mx-auto" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);"> <!-- Improved card style -->
   <div class="card-body">
     <%= form_with(model: [@company, @job], local: true, class: "form") do |form| %>
       <% if @job.errors.any? %>
@@ -33,6 +33,7 @@
         <%= form.label :location, class: "form-label" %>
         <%= form.text_field :location, class: "form-control", placeholder: "Job location" %>
       </div>
+
       <% if current_user.Recruiter? %>
         <div class="form-group mb-3">
           <%= form.label :company_id, "Company", class: "form-label" %>
@@ -56,3 +57,71 @@
 <div class="text-center mt-5">
   <%= link_to 'Back to Jobs', company_jobs_path(@company), class: "btn btn-secondary" %>
 </div>
+
+<!-- Optional: Apply background to the body or main container -->
+<style>
+  body {
+    background-color: #f0f4f8; /* Light background for the entire page */
+    background-image: url('<%= asset_path("createjob.jpg") %>'); 
+  }
+
+  .card {
+    background-color: #ffffff; /* White background for the card */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    transition: transform 0.3s ease-in-out; /* Smooth hover transition */
+  }
+
+  .card:hover {
+    transform: translateY(-5px); /* Lift the card on hover */
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6368;
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+
+  .form-label {
+    font-weight: 600; /* Make label text bolder */
+    color: #333333; /* Darker label color for better readability */
+  }
+
+  .form-control {
+    border-radius: 8px; /* Rounded input fields */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+    transition: border-color 0.3s ease-in-out;
+  }
+
+  .form-control:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Focus effect */
+  }
+
+  .alert-danger {
+    background-color: #f8d7da; /* Light red background for errors */
+    border-color: #f5c6cb; /* Darker red border for errors */
+  }
+
+  h1.heading {
+  padding-top: 70px;
+  color: black !important;
+}
+
+</style>

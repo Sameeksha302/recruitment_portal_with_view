@@ -1,10 +1,9 @@
-<h2 class="text-center mb-4">Edit Profile</h2>
+<h2 class="text-center mb-4 profile-edit-header text-white">Edit Profile</h2>
 
 <div class="container">
-  <div class="card shadow-sm">
-    <div class="card-body">
+  <div class="card shadow-lg">
+    <div class="card-body bg-light rounded">
       <%= form_for(@user, url: profile_path, html: { method: :put }) do |f| %>
-
         <div class="mb-3">
           <%= f.label :name, class: 'form-label' %>
           <%= f.text_field :name, class: 'form-control' %>
@@ -18,9 +17,68 @@
         <% end %>
 
         <div class="d-grid">
-          <%= f.submit 'Update Profile', class: 'btn btn-primary' %>
+          <%= f.submit 'Update Profile', class: 'btn btn-primary btn-lg mt-3' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+
+<style>
+  /* Background styling */
+  body {
+    background-image: url('<%= asset_path("signup.jpg") %>'); /* Update with your image path */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+  }
+
+  .profile-edit-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Enhances visibility on light backgrounds */
+    margin-top: 7rem;
+  }
+
+  .container {
+    margin-top: 4rem; /* Spacing to push card down */
+    max-width: 600px;
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.85); /* Slight transparency for a modern look */
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .form-control {
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+</style>

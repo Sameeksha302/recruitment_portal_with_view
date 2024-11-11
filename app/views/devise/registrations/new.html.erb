@@ -1,68 +1,189 @@
-<h2 class="text-center">Sign up</h2>
+<style>
+  body {
+    background-image: url('<%= asset_path("signup.jpg") %>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
+    transition: transform 0.2s;
+    max-width: 100%;
+  }
+
+  .form-container:hover {
+    transform: translateY(-5px);
+  }
+
+  .form-container .form-label {
+    font-weight: 600;
+    color: #555;
+  }
+
+  .form-container .btn-primary {
+    background-color: #0069d9;
+    border-color: #0062cc;
+    padding: 12px 25px; /* Increased padding for a wider button */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s, border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-container .btn-primary:hover {
+    background-color: #004a9e;
+    border-color: #003882;
+  }
+
+  .signup-heading {
+    font-size: 2.2rem;
+    color: #004085;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-control,
+  .form-select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+
+  .d-grid {
+    display: flex;
+    justify-content: center;
+  }
+
+  .error-messages {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .mt-3 {
+    margin-top: 20px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mt-3 a {
+    color: #0069d9;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+
+  .mt-3 a:hover {
+    color: #004a9e;
+    text-decoration: none;
+  }
+
+  .mt-3 a:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 15px;
+    }
+
+    .signup-heading {
+      font-size: 1.8rem;
+    }
+
+    .form-control,
+    .form-select {
+      padding: 8px;
+    }
+  }
+</style>
 
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'card p-4 shadow-sm' }) do |f| %>
-        
-        <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10">
+      <div class="form-container shadow-sm">
+        <h2 class="text-center signup-heading">Sign up</h2>
 
-        <!-- Name Field -->
-        <div class="mb-3">
-          <%= f.label :name, 'Name', class: 'form-label' %>
-          <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'p-3' }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <!-- Name Field -->
+          <div class="mb-3">
+            <%= f.label :name, 'Name', class: 'form-label' %>
+            <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
+          </div>
+
+          <!-- Email Field -->
+          <div class="mb-3">
+            <%= f.label :email, class: 'form-label' %>
+            <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-3">
+            <%= f.label :password, class: 'form-label' %>
+            <% if @minimum_password_length %>
+              <em><%= @minimum_password_length %> characters minimum</em>
+            <% end %><br />
+            <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+          </div>
+
+          <!-- Password Confirmation Field -->
+          <div class="mb-3">
+            <%= f.label :password_confirmation, class: 'form-label' %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+          </div>
+
+          <!-- Role Selection Field -->
+          <div class="mb-3">
+            <%= f.label :role, 'Select Role', class: 'form-label' %>
+            <%= f.select :role, options_for_select([['Admin', 'Admin'], ['Recruiter', 'Recruiter'], ['Candidate', 'Candidate']], resource.role), {}, class: 'form-select', id: 'role-select' %>
+          </div>
+
+          <!-- Company Name Field for Recruiters -->
+          <div class="mb-3 <%= resource.role == 'Recruiter' ? '' : 'd-none' %>" id="company-name-field">
+            <%= f.label :company_name, 'Company Name', class: 'form-label' %>
+            <%= f.text_field :company_name, class: 'form-control' %>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <%= f.submit "Sign up", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+
+        <div class="mt-3 text-center">
+          <%= render "devise/shared/links" %>
         </div>
-
-        <!-- Email Field -->
-        <div class="mb-3">
-          <%= f.label :email, class: 'form-label' %>
-          <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
-        </div>
-
-        <!-- Password Field -->
-        <div class="mb-3">
-          <%= f.label :password, class: 'form-label' %>
-          <% if @minimum_password_length %>
-            <em><%= @minimum_password_length %> characters minimum</em>
-          <% end %><br />
-          <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
-        </div>
-
-        <!-- Password Confirmation Field -->
-        <div class="mb-3">
-          <%= f.label :password_confirmation, class: 'form-label' %>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
-        </div>
-
-        <!-- Role Selection Field -->
-        <div class="mb-3">
-          <%= f.label :role, 'Select Role', class: 'form-label' %>
-          <%= f.select :role, options_for_select([['Admin', 'Admin'], ['Recruiter', 'Recruiter'], ['Candidate', 'Candidate']], resource.role), {}, class: 'form-select', id: 'role-select' %>
-        </div>
-
-      
-
-        <!-- Company Name Field for Recruiters -->
-        <div class="mb-3 <%= resource.role == 'Recruiter' ? '' : 'd-none' %>" id="company-name-field">
-          <%= f.label :company_name, 'Company Name', class: 'form-label' %>
-          <%= f.text_field :company_name, class: 'form-control' %>
-        </div>
-
-
-        <!-- Submit Button -->
-        <div class="d-grid">
-          <%= f.submit "Sign up", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-
-      <div class="mt-3">
-        <%= render "devise/shared/links" %>
       </div>
     </div>
   </div>
 </div>
+
 <script>
-document.addEventListener("turbo:load", function() {
+document.addEventListener("DOMContentLoaded", function() {
   const roleSelect = document.getElementById('role-select');
   const companyNameField = document.getElementById('company-name-field');
 
@@ -79,4 +200,3 @@ document.addEventListener("turbo:load", function() {
   roleSelect.addEventListener('change', toggleCompanyFields);
 });
 </script>
-

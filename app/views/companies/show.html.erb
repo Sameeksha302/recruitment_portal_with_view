@@ -1,28 +1,106 @@
-<h1 class="text-center my-4"><%= @company.name %></h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @company.name %> - Company Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Address:</h5>
-          <p class="card-text"><%= @company.address %></p>
-          <h5 class="card-title">Industry Type:</h5>
-          <p class="card-text"><%= @company.industry_type %></p>
+    <style>
+      body {
+        background-image: url('<%= asset_path("company3.jpg") %>'); /* Ensure you have an image named 'background.jpg' */
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: white; /* Ensures text stands out on background */
+      }
 
-          <% if current_user.role != 'Candidate' %>
-            <!-- Show Edit and Delete buttons only for non-candidates -->
-            <div class="d-flex justify-content-between mt-4">
-              <%= link_to 'Edit', edit_company_path(@company), class: "btn btn-secondary" %>
-              <%= button_to 'Delete', company_path(@company), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+      .container {
+        padding-top: 50px;
+      }
+
+      .card {
+        background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white card */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-title {
+        color: #333;
+      }
+
+      .btn {
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 10px 20px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-outline-primary {
+        border: 2px solid #007bff;
+        color: #007bff;
+      }
+
+      .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-secondary, .btn-danger {
+        font-weight: bold;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .btn-secondary:hover, .btn-danger:hover {
+        transform: scale(1.1);
+      }
+
+      .text-center {
+        margin-top: 20px;
+      }
+
+      .my-4 {
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+
+      .card-text {
+        color: #555;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 class="text-center my-4"><%= @company.name %></h1>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Address:</h5>
+              <p class="card-text"><%= @company.address %></p>
+              <h5 class="card-title">Industry Type:</h5>
+              <p class="card-text"><%= @company.industry_type %></p>
+
+              <% if current_user.role != 'Candidate' %>
+                <div class="d-flex justify-content-between mt-4">
+                  <%= link_to 'Edit', edit_company_path(@company), class: "btn btn-secondary" %>
+                  <%= button_to 'Delete', company_path(@company), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+                </div>
+              <% end %>
+
+              <div class="text-center mt-3">
+                <%= link_to 'Back to Companies', companies_path, class: "btn btn-outline-primary" %>
+              </div>
             </div>
-          <% end %>
-
-          <div class="text-center mt-3">
-            <%= link_to 'Back to Companies', companies_path, class: "btn btn-outline-primary" %>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </body>
+</html>

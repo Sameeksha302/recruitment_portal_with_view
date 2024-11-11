@@ -17,46 +17,82 @@
     <%= javascript_importmap_tags %>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+
+    <style>
+      .custom-button {
+        height: 45px;
+        padding: 0 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #fff;
+        margin-left: 10px; /* Adding margin for spacing between buttons */
+      }
+
+      .btn-primary.custom-button { background-color: #007bff; }
+      .btn-warning.custom-button { background-color: #ffc107; }
+      .btn-success.custom-button { background-color: #28a745; }
+      .btn-secondary.custom-button { background-color: #6c757d; }
+      .btn-danger.custom-button { background-color: #dc3545; }
+
+      .right-align-container {
+        position: absolute; /* Absolute positioning relative to the nearest positioned ancestor */
+        top: 15px; /* Adjust top spacing */
+        right: 100px;  /* Adjust right spacing */
+        display: flex;
+        gap: 10px;
+      }
+
+      .notice, .alert {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #f8f9fa;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    </style>
   </head>
 
   <body>
     <!-- Right-aligned profile, create job, public companies, and log out buttons -->
-    <div class="container">
-      <div class="d-flex justify-content-end mt-3">
-        <% if user_signed_in? %>
-          <%= link_to "Profile", profile_path, class: "btn btn-primary me-2" %>
-          
-          <!-- Show "Create New Job" button only if user is a recruiter -->
-          <% if current_user.role == "Recruiter" %>
-            <%= link_to "Create New Job", new_job_path, class: "btn btn-warning me-2" %>
-          <% end %>
-          
-          <!-- Show "Create New Company" button only if user is an admin -->
-          <% if current_user.role == "Admin" %>
-            <%= link_to "Create New Company", new_company_path, class: "btn btn-success me-2" %>
-          <% end %>
-          
-          <%= link_to "Companies with Jobs", public_companies_path, class: "btn btn-secondary me-2" %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger me-2" %>
+    <div class="right-align-container">
+      <% if user_signed_in? %>
+        <%= link_to "Profile", profile_path, class: "btn btn-primary custom-button" %>
+        
+        <% if current_user.role == "Recruiter" %>
+          <%= link_to "Create New Job", new_job_path, class: "btn btn-warning custom-button" %>
         <% end %>
-      </div>
+        
+        <% if current_user.role == "Admin" %>
+          <%= link_to "Create New Company", new_company_path, class: "btn btn-success custom-button" %>
+        <% end %>
+        
+        <%= link_to "Companies with Jobs", public_companies_path, class: "btn btn-secondary custom-button" %>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger custom-button" %>
+      <% end %>
     </div>
 
     <% if notice %>
       <div><p class="notice"><%= notice %></p></div>
       <script>
-      setTimeout(function() {
-        document.querySelector('.notice').style.display = 'none';
-      }, 5000);
+        setTimeout(function() {
+          document.querySelector('.notice').style.display = 'none';
+        }, 5000);
       </script>
     <% end %>
 
     <% if alert %>
       <div><p class="alert"><%= alert %></p></div>
       <script>
-      setTimeout(function() {
-        document.querySelector('.alert').style.display = 'none';
-      }, 5000);
+        setTimeout(function() {
+          document.querySelector('.alert').style.display = 'none';
+        }, 5000);
       </script>
     <% end %>
 

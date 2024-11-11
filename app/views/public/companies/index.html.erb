@@ -1,33 +1,41 @@
-<div class="container my-4">
-  <h1 class="text-center mb-4">Company Job Listings</h1>
+<div class="container my-5">
+  <!-- Main Heading with Background Image -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 text-light mb-4">Explore Career Opportunities</h1>
+    <p class="lead text-light">Find the best job opportunities across various companies. Filter by location, job title, and salary.</p>
+  </div>
 
+  <!-- Search Form -->
   <%= form_with url: public_companies_path, method: :get, local: true, class: "mb-4" do %>
     <div class="row">
-      <div class="col-md-3 mb-3">
-        <%= text_field_tag :company_name, params[:company_name], class: "form-control", placeholder: "Company Name" %>
+      <div class="col-md-4 mb-3">
+        <%= text_field_tag :company_name, params[:company_name], class: "form-control form-control-lg", placeholder: "Company Name" %>
       </div>
-      <div class="col-md-3 mb-3">
-        <%= text_field_tag :title, params[:title], class: "form-control", placeholder: "Job Title" %>
+      <div class="col-md-4 mb-3">
+        <%= text_field_tag :title, params[:title], class: "form-control form-control-lg", placeholder: "Job Title" %>
       </div>
-      <div class="col-md-3 mb-3">
-        <%= text_field_tag :location, params[:location], class: "form-control", placeholder: "Location" %>
+      <div class="col-md-4 mb-3">
+        <%= text_field_tag :location, params[:location], class: "form-control form-control-lg", placeholder: "Location" %>
       </div>
-      <div class="col-md-2 mb-3">
-        <%= number_field_tag :min_salary, params[:min_salary], class: "form-control", placeholder: "Min Salary" %>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= number_field_tag :min_salary, params[:min_salary], class: "form-control form-control-lg", placeholder: "Min Salary" %>
       </div>
-      <div class="col-md-2 mb-3">
-        <%= number_field_tag :max_salary, params[:max_salary], class: "form-control", placeholder: "Max Salary" %>
+      <div class="col-md-6 mb-3">
+        <%= number_field_tag :max_salary, params[:max_salary], class: "form-control form-control-lg", placeholder: "Max Salary" %>
       </div>
     </div>
     <div class="d-flex justify-content-center">
-      <%= submit_tag "Search", class: "btn btn-primary" %>
+      <%= submit_tag "Search", class: "btn btn-primary btn-lg shadow-sm" %>
     </div>
   <% end %>
 
+  <!-- Job Listings -->
   <% if @companies.any? %>
     <% @companies.each do |company| %>
-      <div class="card mb-4">
-        <div class="card-header">
+      <div class="card mb-5 shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-primary text-white">
           <h3 class="mb-0"><%= company.name %></h3>
         </div>
         <div class="card-body">
@@ -35,12 +43,12 @@
           <% if jobs_to_display.any? %>
             <div class="list-group">
               <% jobs_to_display.each do |job| %>
-                <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="list-group-item d-flex justify-content-between align-items-center border-0 rounded-3 shadow-sm">
                   <div>
                     <%= link_to job.title, company_job_path(company, job), class: "text-decoration-none fw-bold" %>
                     <p class="mb-1 text-muted"><%= job.description.truncate(100) %></p>
                   </div>
-                  <span class="badge bg-primary rounded-pill"><%= job.location %></span>
+                  <span class="badge bg-secondary rounded-pill"><%= job.location %></span>
                 </div>
               <% end %>
             </div>
@@ -51,7 +59,7 @@
       </div>
     <% end %>
   <% else %>
-    <!-- Display this message if no companies or jobs match the search criteria -->
+    <!-- No results message -->
     <p class="text-center text-muted">
       No companies or jobs found for 
       <%= "Company Name: '#{params[:company_name]}'" if params[:company_name].present? %>
@@ -63,3 +71,111 @@
     </p>
   <% end %>
 </div>
+
+<!-- Background Image Styling -->
+<style>
+  body {       
+    background-image: url('<%= asset_path("public_companies.jpg") %>'); /* Replace with your image file */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 40px;
+  }
+
+  .container {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay for better readability */
+    padding: 40px;
+    border-radius: 12px;
+    margin-top: 4rem; /* Move container down */
+  }
+
+  .display-4 {
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+
+  .btn-primary:focus, .btn-primary:active {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  }
+
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    margin-top: 2rem; /* Add spacing between cards */
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    background-color: #003366;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .list-group-item {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .list-group-item:hover {
+    background-color: #f1f1f1;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .list-group-item .badge {
+    font-size: 0.9em;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 20px;
+    }
+
+    .btn-lg {
+      font-size: 1rem;
+    }
+
+    .row > .col-md-4, .row > .col-md-6 {
+      margin-bottom: 10px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .btn-lg {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<!-- Optional Script to Reveal Jobs -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".show-more-btn").forEach(button => {
+      button.addEventListener("click", function() {
+        const companyId = this.dataset.companyId;
+        const hiddenJobs = document.querySelectorAll(`.hidden-job[data-company-id="${companyId}"]`);
+
+        hiddenJobs.forEach(job => job.classList.remove("hidden-job"));
+
+        // Hide the "Show More" button after revealing all jobs
+        this.style.display = "none";
+      });
+    });
+  });
+</script>

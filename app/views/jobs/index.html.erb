@@ -1,34 +1,143 @@
-<h1 class="text-center my-4">Job Listings</h1>
+<h1 class="text-center my-4 text-primary job-listings-header">Job Listings</h1>
 
 <div class="container">
   <div class="d-flex justify-content-between mb-3">
-    <%= link_to 'New Job Post', new_company_job_path(@company), class: "btn btn-primary" %>
+    <%= link_to 'New Job Post', new_company_job_path(@company), class: "btn btn-primary btn-lg shadow-sm" %>
   </div>
-  
-  <table class="table table-striped table-bordered">
-    <thead class="thead-light">
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Salary</th>
-        <th>Location</th>
-        <th>Status</th>
-        <th colspan="3" class="text-center">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @jobs.each do |job| %>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered shadow-sm rounded">
+      <thead class="thead-dark">
         <tr>
-          <td><%= job.title %></td>
-          <td><%= truncate(job.description, length: 50) %></td> <!-- Truncate long descriptions -->
-          <td><%= number_to_currency(job.salary) %></td> <!-- Format salary as currency -->
-          <td><%= job.location %></td>
-          <td><%= job.status.humanize %></td>
-          <td class="text-center"><%= link_to 'Show', company_job_path(@company, job), class: "btn btn-info btn-sm" %></td>
-          <td class="text-center"><%= link_to 'Edit', edit_company_job_path(@company, job), class: "btn btn-warning btn-sm" %></td>
-          <td class="text-center"><%= button_to 'Destroy', company_job_path(@company, job), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %></td>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Salary</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th colspan="3" class="text-center">Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @jobs.each do |job| %>
+          <tr class="job-row">
+            <td><%= job.title %></td>
+            <td><%= truncate(job.description, length: 50) %></td>
+            <td><%= number_to_currency(job.salary) %></td>
+            <td><%= job.location %></td>
+            <td><%= job.status.humanize %></td>
+            <td class="text-center">
+              <%= link_to 'Show', company_job_path(@company, job), class: "btn btn-info btn-sm" %>
+            </td>
+            <td class="text-center">
+              <%= link_to 'Edit', edit_company_job_path(@company, job), class: "btn btn-warning btn-sm" %>
+            </td>
+            <td class="text-center">
+              <%= button_to 'Destroy', company_job_path(@company, job), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<style>
+  /* Apply background image to the entire body */
+  body {
+    background-image: url('<%= asset_path("jobshow1.jpg") %>');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    color: #fff; /* Ensure text is visible on dark backgrounds */
+  }
+
+  .job-listings-header {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white !important; /* Set text color to white */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Optional: adds a shadow for better visibility */
+    padding-top: 70px;
+  }
+
+  /* Table styling */
+  .table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight background to enhance readability */
+  }
+
+  .table th, .table td {
+    vertical-align: middle;
+    padding: 12px 15px;
+  }
+
+  /* Row hover effect */
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2;
+  }
+
+  /* Styling for the action buttons */
+  .btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+  }
+
+  .btn-info:hover {
+    background-color: #138496;
+    border-color: #138496;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+
+  /* Responsive Table */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Additional Styling */
+  .thead-dark {
+    background-color: #343a40;
+    color: white;
+  }
+
+  /* Button Hover Effects */
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Shadow Styling */
+  .shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Button Sizes */
+  .btn-lg {
+    font-size: 1.2rem;
+  }
+</style>
