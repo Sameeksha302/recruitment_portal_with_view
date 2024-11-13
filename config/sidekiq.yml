@@ -4,4 +4,4 @@
   - mailers
 :retry: 0
 :redis:
-  url: redis://red-csmgedjv2p9s73ctq83g:6379
+  url: redis://red-csq4krhu0jms73fn9m80:6379
