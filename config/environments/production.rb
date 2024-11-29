@@ -67,7 +67,9 @@ Rails.application.configure do
   # want to log everything, set the level to "debug".
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
-  config.action_mailer.default_url_options = { host: "recruitment-portal-p68x.onrender.com", port: "https" }
+  # config.action_mailer.default_url_options = { host: "recruitment-portal-p68x.onrender.com", port: "https" }
+  config.action_mailer.default_url_options = { host: "recruitment-portal-with-view.onrender.com", port: "https" }
+
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
